@@ -1,14 +1,12 @@
 package dao;
 
-import pojo.*;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 public interface Administrators {
     //增加服务员
-    void add_Waiter();
-    //增加顾客
-    void add_Customer();
+    void add_Waiter(String HWnumber,String HWpassword,String HWname,String HWgender,String HWage,String PoliticalOutlook,String HWIDnumber,String HWphone,String EntryDate,String HWsalary,String HAnumber,String HRnumber);
     //增加客房物品
     void add_HotelGoods();
     //增加酒店信息
@@ -22,8 +20,6 @@ public interface Administrators {
 
     //删除服务员信息
     void delete_Waiter();
-    //删除顾客信息
-    void delete_Customer();
     //删除客房物品信息
     void delete_HotelGoods();
     //删除酒店信息
@@ -35,29 +31,27 @@ public interface Administrators {
     //删除入住情况
     void delete_LIvingCondition();
 
-    //续订酒店
-    void RenewalHotel(Customers Cnumber);
     //更新服务员信息
-    void update_Waiter(Waiters HWnumber);
+    void update_Waiter(String HWnumber);
     //更新顾客信息
-    void update_Customer(Customers Cnumber);
+    void update_Customer(String Cnumber);
     //更新客房物品信息
-    void update_HotelGoods(RoomGoods RGnumber);
+    void update_HotelGoods(String RGnumber);
     //更新酒店信息
-    void update_HotelMessage(HotelMessage HMnumber);
+    void update_HotelMessage(String HMnumber);
     //更新客房信息
-    void update_Rooms(Rooms HRnumber);
+    void update_Rooms(String HRnumber);
     //更新工作安排
-    void update_WorkArrangement(WorkArrangement WAnumber);
+    void update_WorkArrangement(String WAnumber);
     //更新入住情况
-    void update_LIvingCondition(LivingCondition HRnumber,LivingCondition Cnumber);
+    void update_LIvingCondition(String HRnumber,String Cnumber);
 
     //查询服务员信息
-    List<String> find_Waiter(Waiters HWnumber);
+    ResultSet find_Waiter(String HWnumber);
     //查询顾客信息
-    List<String> find_Customer(Customers Cnumber);
+    ResultSet find_Customer(String Cnumber);
     //查询工作安排
-    List<String> find_WorkArrangement(WorkArrangement WAnumber);
+    ResultSet find_WorkArrangement(String WAnumber);
     //查询入住情况
-    void find_LIvingCondition(LivingCondition HRnumber,LivingCondition Cnumber);
+    ResultSet find_LIvingCondition(String HRnumber,String Cnumber);
 }

@@ -1,35 +1,21 @@
 package view.waiter;
 
+import daoimpl.WaitersController;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login{
-    private String HWnumber;
-    private char[] Password;
-
-    public String getHWnumber() {
-        return HWnumber;
-    }
-
-    public void setHWnumber(String HWnumber) {
-        this.HWnumber = HWnumber;
-    }
-
-    public char[] getPassword() {
-        return Password;
-    }
-
-    public void setPassword(char[] password) {
-        Password = password;
-    }
-
     public static void main(String[] args) {
 
         final JFrame frame = new JFrame();
         frame.setBounds(700,300,400,400);
-        frame.setTitle("Customer-Login");
+        frame.setTitle("Waiters-Login");
         frame.setLayout(null);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         JButton button1 = new JButton("登录");
         JButton button2 = new JButton("注册");
@@ -57,18 +43,24 @@ public class Login{
         frame.setVisible(true);
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login();
-                login.setHWnumber(jtf.getText());
-                login.setPassword(jpf.getPassword());
-                System.out.println(login.getHWnumber());
-                System.out.println(login.getPassword());
-                frame.setVisible(false);
-                new Work();
+                WaitersController waitersController = new WaitersController();
+                ResultSet rs = waitersController.Verification(jtf.getText(), String.valueOf(jpf.getPassword()));
+                try {
+                    if (rs.next()) {
+                        frame.setVisible(false);
+                        new Work(jtf.getText());
+                    }else {
+                        new Error();
+                        frame.setVisible(false);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                new Regist();
             }
         });
 

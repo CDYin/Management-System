@@ -1,37 +1,42 @@
 package view.waiter;
 
 import daoimpl.WaitersController;
-import pojo.RoomGoods;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Work {
-    Work() {
+    Work(final String number) {
         final JFrame frame = new JFrame();
         frame.setBounds(500,20,1000,1000);
-        frame.setTitle("Customer-Login");
+        frame.setTitle("Waiters-Work");
         frame.setLayout(null);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         JButton button1 = new JButton("查询");
-        JButton button2 = new JButton("编辑");
-        JButton button3 = new JButton("删除");
+        JButton button2 = new JButton("添加");
+        JButton button3 = new JButton("编辑退房");
+        JButton button4 = new JButton("编辑物品");
+        JButton button5 = new JButton("删除");
         button1.setSize(100,40);
         button1.setLocation(800,80);
         button2.setSize(100,40);
-        button2.setLocation(500,850);
+        button2.setLocation(300,850);
         button3.setSize(100,40);
-        button3.setLocation(700,850);
+        button3.setLocation(420,850);
+        button4.setSize(100,40);
+        button4.setLocation(540,850);
+        button5.setSize(100,40);
+        button5.setLocation(660,850);
         frame.add(button1);
         frame.add(button2);
         frame.add(button3);
+        frame.add(button4);
+        frame.add(button5);
 
         JLabel jLabel = new JLabel("查询信息:");
         String[] message = {"酒店信息","物品信息","客房信息","工资信息","工作安排","顾客信息"};
@@ -128,13 +133,11 @@ public class Work {
                         jScrollPane.setBounds(300,260,600,500);
                         frame.add(jScrollPane);
                     }
-                }
-                else if (content.equals("工资信息")){
+                } else if (content.equals("工资信息")){
                     DefaultTableModel model=new DefaultTableModel();
                     WaitersController waitersController = new WaitersController();
-                    Login login = new Login();
                     model.setColumnIdentifiers(new Object[]{"绩效考核结果","工资","负责人员编号","更新时间","更新人编号"});
-                    ResultSet rs = waitersController.find_Waiter(login.getHWnumber());
+                    ResultSet rs = waitersController.find_Waiter(number);
                     while(true) {
                         try {
                             if (!rs.next()) break;
@@ -156,13 +159,90 @@ public class Work {
                         jScrollPane.setBounds(300,260,600,500);
                         frame.add(jScrollPane);
                     }
+                }else if (content.equals("工作安排")){
+                    DefaultTableModel model=new DefaultTableModel();
+                    WaitersController waitersController = new WaitersController();
+                    model.setColumnIdentifiers(new Object[]{"工作编号","员工编号","每日工作安排","是否完成","备注","发布人员编号","更新时间"});
+                    ResultSet rs = waitersController.find_WorkArrangement(number);
+                    while(true) {
+                        try {
+                            if (!rs.next()) break;
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        try {
+                            String WAnumber = rs.getString("WAnumber");
+                            String HWnumber = rs.getString("HWnumber");
+                            String WAarrangement = rs.getString("WAarrangement");
+                            String Finish = rs.getString("Finish");
+                            String WAnote = rs.getString("WAnote");
+                            String HAnumber = rs.getString("HAnumber");
+                            String UpdatePersonNumber = rs.getString("UpdatePersonNumber");
+                            model.addRow(new Object[]{WAnumber, HWnumber, WAarrangement, Finish, WAnote,HAnumber,UpdatePersonNumber});
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        JTable jTable = new JTable(model);
+                        JScrollPane jScrollPane = new JScrollPane(jTable);
+                        jScrollPane.setBounds(300,260,600,500);
+                        frame.add(jScrollPane);
+                    }
+                } else if (content.equals("顾客信息")){
+                    DefaultTableModel model=new DefaultTableModel();
+                    WaitersController waitersController = new WaitersController();
+                    model.setColumnIdentifiers(new Object[]{"客户编号","姓名","性别","身份证号","联系电话","入住客房编号","预计入住时间","预计离店时间"});
+                    ResultSet rs = waitersController.find_Customer();
+                    while(true) {
+                        try {
+                            if (!rs.next()) break;
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        try {
+                            String Cnumber = rs.getString("Cnumber");
+                            String Cname = rs.getString("Cname");
+                            String Cgender = rs.getString("Cgender");
+                            String CIDnumber = rs.getString("CIDnumber");
+                            String Cphone = rs.getString("Cphone");
+                            String HRnumber = rs.getString("HRnumber");
+                            String ExpectedCheckTime = rs.getString("ExpectedCheckTime");
+                            String ExpectedDepartureTime = rs.getString("ExpectedDepartureTime");
+                            model.addRow(new Object[]{Cnumber, Cname, Cgender, CIDnumber, Cphone,HRnumber,ExpectedCheckTime,ExpectedDepartureTime});
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        JTable jTable = new JTable(model);
+                        JScrollPane jScrollPane = new JScrollPane(jTable);
+                        jScrollPane.setBounds(300,260,600,500);
+                        frame.add(jScrollPane);
+                    }
                 }
             }
         });
-        frame.setVisible(true);
-    }
 
-    public static void main(String[] args) {
-        new Work();
-    }
+        button2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new add_customer();
+            }
+        });
+
+        button3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Agent_update_Room();
+            }
+        });
+
+        button4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Agent_update_Goods();
+            }
+        });
+
+        button5.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Agent_delete();
+            }
+        });
+        frame.setVisible(true);
+}
 }
