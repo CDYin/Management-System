@@ -31,8 +31,6 @@ public class Agent_update_DepartTime {
                 frame.setVisible(false);
             }
         });
-
         frame.setVisible(true);
     }
-
 }

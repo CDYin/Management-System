@@ -71,6 +71,7 @@ public class Login {
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new Tourist();
+                frame.setVisible(false);
             }
         });
         frame.setVisible(true);

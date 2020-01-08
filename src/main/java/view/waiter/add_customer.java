@@ -121,6 +121,7 @@ public class add_customer {
                 waitersController.add_Customer(jtf1.getText(),jtf2.getText(),jtf3.getText(),jtf4.getText(),jtf5.getText(),
                         jtf6.getText(), jtf7.getText(),jtf8.getText(),jtf9.getText(),jtf10.getText(),
                         jtf11.getText(),jtf12.getText(),jtf13.getText(),jtf14.getText(),jtf15.getText());
+                frame.setVisible(false);
             }
         });
 

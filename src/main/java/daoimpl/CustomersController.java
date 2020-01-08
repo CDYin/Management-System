@@ -8,12 +8,12 @@ import java.sql.ResultSet;
 public class CustomersController implements Customers, General {
     public void update_Customer(String Cnumber,String DepartTime) {
         Connectionsql connectionsql = new Connectionsql();
-        connectionsql.jdbc("update Customer set ExpectedDepartureTime = '"+DepartTime+"' where Caccount = '"+Cnumber+"'");
+        connectionsql.jdbc1("update Customer set ExpectedDepartureTime = '"+DepartTime+"' where Caccount = '"+Cnumber+"'");
     }
 
     public void add_Customer(String Cnumber, String Caccount, String Cpassword, String Cname, String Cgender, String CIDnumber, String Cphone, String HRnumber, String ExpectedOccupancyDays, String ExpectedCheckTime, String ExpectedDepartureTime, String BreakfastService, String MorningCallService, String Deposit, String HotelExpense) {
         Connectionsql connectionsql = new Connectionsql();
-        connectionsql.jdbc("insert into Customer values('"+Cnumber+"','"+Caccount+"','"+Cpassword+"','"+Cname+"','"+Cgender+"','"+CIDnumber+"','"+Cphone+"','"+HRnumber+"','"+ExpectedOccupancyDays+"','"+ExpectedCheckTime+"','"+ExpectedDepartureTime+"','"+BreakfastService+"','"+MorningCallService+"','"+Deposit+"','"+HotelExpense+"',null,null)");
+        connectionsql.jdbc1("insert into Customer values('"+Cnumber+"','"+Caccount+"','"+Cpassword+"','"+Cname+"','"+Cgender+"','"+CIDnumber+"','"+Cphone+"','"+HRnumber+"','"+ExpectedOccupancyDays+"','"+ExpectedCheckTime+"','"+ExpectedDepartureTime+"','"+BreakfastService+"','"+MorningCallService+"','"+Deposit+"','"+HotelExpense+"',null,null)");
     }
 
     public ResultSet Verification(String account, String password) {
